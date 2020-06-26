@@ -1,25 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+
+import Title from './components/Title';
+import Input from './components/Input';
 
 function App() {
+  const [conta, setConta] = useState(0);
+  const [gorjeta, setGorjeta] = useState(10);
+
+  function calculoDaGorjeta() {
+    return conta * (gorjeta / 100);
+  }
+
+  function totalDaConta() {
+    return parseFloat(conta) + parseFloat(calculoDaGorjeta());
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Title>Calculadora de Gorjeta</Title>
+      <h4>Quanto deu a conta?</h4>
+      <Input
+        id="conta"
+        value={conta}
+        onChange={(e) => setConta(e.target.value)}
+      ></Input>
+      <h4>Qual a porcentagem de gorjeta?</h4>
+      <Input
+        id="gorjeta"
+        value={gorjeta}
+        onChange={(e) => setGorjeta(e.target.value)}
+      ></Input>
+      <hr />
+      {conta > 0 && (
+        <>
+          <h4>Sub-total: R${conta}</h4>
+          <h4>
+            Gorjeta({gorjeta}%): R${calculoDaGorjeta()}
+          </h4>
+          <h4>
+            <b>Total: R${totalDaConta()}</b>
+          </h4>
+        </>
+      )}
+    </>
   );
 }
 
